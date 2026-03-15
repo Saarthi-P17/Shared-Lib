@@ -4,6 +4,9 @@ def call(Map config = [:]) {
         // Environment variables
         def REPORT_DIR = config.get('reportDir', 'reports')
         //def APPROVED_AMI = config.get('approvedAmi', 'ami-1234567890abcdef')
+        // link to main  repo 
+        def GITHUB_REPO = 'https://github.com/Saarthi-P17/declarative-pipeline-poc.git'  // hardcoded repo
+        def GITHUB_BRANCH = 'main'  // hardcoded branch
 
         try {
             stage('Install Security Tools') {
@@ -33,7 +36,10 @@ def call(Map config = [:]) {
             }
 
             stage('Checkout') {
-                checkout scm
+            echo "Checking out hardcoded GitHub repository..."
+            git branch: GITHUB_BRANCH,
+                url: GITHUB_REPO
+                
             }
 
             stage('Commit Sign-off Check') {
